@@ -1,0 +1,108 @@
+[Jebao_Lt]
+
+Set Wave1
+If Time 08:00 to 10:59 Then DuskDawn
+If Time 11:00 to 14:00 Then Wave1
+If Time 14:01 to 19:59 Then DuskDawn
+If Time 20:00 to 07:59 Then Night
+If Outlet Timer1 = ON Then Lt_Flush
+If Outlet Timer2 = ON Then DuskDawn
+If Outlet Timer3 = ON Then Wave2
+If FeedA 000 Then OFF
+
+[Jebao_Rt]
+Set Wave1
+If Time 08:00 to 11:59 Then DuskDawn
+If Time 12:00 to 13:59 Then Wave1
+If Time 14:01 to 20:00 Then DuskDawn
+If Time 20:01 to 07:59 Then Night
+If Outlet Timer1 = ON Then Rt_Flush
+If Outlet Timer2 = ON Then DuskDawn 
+If Outlet Timer3 = ON Then Wave2
+If FeedA 000 Then OFF
+
+Pump Profiles:
+(maindaylight wave pattern)
+
+Synchronize Enabled
+Divide by 10 Enabled
+Initial off time (Seconds) 0
+On time (Seconds) 7
+Off time (Seconds) 4
+Minimum intensity 30
+Maximum intensity 90
+
+(Similarpattern to the above but Sync is disabled which creates abit more chaos)
+
+Synchronize Disabled
+Divide by 10 Enabled
+Initial off time (Seconds) 0
+On time (Seconds) 7
+Off time (Seconds) 4
+Minimum intensity 30
+Maximum intensity 90
+
+Lt_Flush
+Synchronize Disabled
+Divide by 10 Disabled
+Initial off time (Seconds) 0
+On time (Seconds) 30
+Off time (Seconds) 30
+Minimum intensity 0
+Maximum intensity 100
+
+[Rt_Flush]
+Synchronize Disabled
+Divide by 10 Disabled
+Initial off time (Seconds) 30
+On time (Seconds) 30
+Off time (Seconds) 30
+Minimum intensity 0
+Maximum intensity 100
+
+DuskDawn
+(This is a lower flow wave pattern used intermittently during the light hours as well as before and after lights go out)
+
+Synchronize Enabled
+Divide by 10 Enabled
+Initial off time (Seconds) 0
+On time (Seconds) 7
+Off time (Seconds) 4
+Minimum intensity 0
+Maximum intensity 35
+
+(Sets constant 30% flow during light off hours)
+
+Synchronize Disabled
+Divide by 10 Disabled
+Initial off time (Seconds) 0
+On time (Seconds) 10
+Off time (Seconds) 15
+Minimum intensity 0
+Maximum intensity 30
+
+Virtual Outlets
+(3 timers. The timers are used to create short random periods of different flowduring daylight hours)
+
+Timer1
+(turnson every 120 minutes for 10 minutes. If timer 2 is on at that time, it shouldremain off)
+
+OSC 120:00/010:00/000:00 Then ON
+If Outlet Timer2 = ON Then OFF
+If Time 19:30 to 08:00 Then OFF
+If FeedA 000 Then OFF
+
+Timer2
+(turnson every 45 minutes for 15 minutes except if timer 3 is on)
+
+OSC 045:00/015:00/000:00 Then ON
+If Outlet Timer3 = ON Then OFF
+If Time 19:30 to 08:00 Then OFF
+If FeedA 000 Then OFF
+
+Timer3 (turnon every 15 minutes for 5 minutes except if timer 1 is on)
+
+OSC 015:00/005:00/000:00 Then ON
+If Outlet Timer1 = ON Then OFF
+If Time 19:30 to 08:00 Then OFF
+If FeedA 000 Then OFF

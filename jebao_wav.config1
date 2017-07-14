@@ -1,0 +1,144 @@
+# Setup 1
+
+VSP1: Left WP40
+Fallback ON
+Set ON
+If Time 07:00 to 08:00 Then RampUp
+If Time 08:00 to 12:00 Then Left
+If Time 12:00 to 18:00 Then Long_L
+If Time 18:00 to 18:30 Then Surge_L
+If Time 18:30 to 19:00 Then Calm
+If Time 19:00 to 21:00 Then Left
+If Time 21:00 to 22:00 Then RampDn
+If Time 22:00 to 07:00 Then Dusk_L
+If Outlet V-Feed = ON Then OFF
+Defer 003:00 Then ON 
+
+VSP2: Right WP40
+Fallback ON
+Set ON
+If Time 07:00 to 08:00 Then RampUp
+If Time 08:00 to 12:00 Then Right
+If Time 12:00 to 18:00 Then Long_R
+If Time 18:00 to 18:30 Then Calm
+If Time 18:30 to 19:00 Then Surge_R
+If Time 19:00 to 21:00 Then Right
+If Time 21:00 to 22:00 Then RampDn
+If Time 22:00 to 07:00 Then Dusk_R
+If Outlet V-Feed = ON Then OFF
+Defer 003:00 Then ON
+
+Profiles:
+
+Left:
+type> pump
+minIntensity> 0
+maxIntensity> 100
+sync> Disable
+div10> Enable
+intOffTime> 0
+OnTime> 12
+OffTime> 12
+
+Right
+type> pump
+minIntensity> 0
+maxIntensity> 100
+sync> Enable
+div10> Enable
+intOffTime> 12
+OnTime> 12
+OffTime> 0
+
+RampUp:
+type> ramp
+StartIntensity> 0
+EndIntensity> 100
+ramp time 60 mins
+
+RampDn:
+type> ramp
+Start Intensity> 100
+End Intensity> 0
+ramp time 60 mins
+
+Long_L:
+type> pump
+minIntensity> 30
+maxIntensity> 100
+sync> Disable
+div10> Enable
+intOffTime> 0
+OnTime> 15
+OffTime> 15
+
+Long_R
+type> pump
+minIntensity> 30
+maxIntensity> 100
+sync> Enable
+div10> Enable
+intOffTime> 15
+OnTime> 15
+OffTime> 0
+
+Dusk_R:
+type> pump
+minIntensity> 0
+maxIntensity> 30
+sync> Disable
+div10> Enable
+intOffTime> 10
+OnTime> 10
+OffTime> 0
+
+Dusk_L:
+type> pump
+minIntensity> 0
+maxIntensity> 30
+sync> Enable
+div10> Enable
+intOffTime> 0
+OnTime> 10
+OffTime> 10
+
+Surge_R:
+type> pump
+minIntensity> 30
+maxIntensity> 100
+sync> Disable
+div10> Diable
+intOffTime> 0
+OnTime> 10
+OffTime> 2
+
+Surge_L:
+type> pump
+minIntensity> 30
+maxIntensity> 100
+sync> Disable
+div10> Disable
+intOffTime> 0
+OnTime> 10
+OffTime> 2
+
+Calm:
+type> pump
+minIntensity> 0
+maxIntensity> 0
+sync> Disable
+div10> Disable
+intOffTime> 0
+OnTime> 0
+OffTime> 0
+
+Outlet V-Feed: (This is my AFS)
+Fallback OFF
+Set OFF
+If Time 07:30 to 07:31 Then ON
+If Time 07:34 to 07:35 Then ON
+If Time 12:00 to 12:01 Then ON
+If Time 12:04 to 12:05 Then ON
+If Time 20:00 to 20:01 Then ON
+If ORP < 350 Then OFF
+If Swx4_1 CLOSED Then OFF

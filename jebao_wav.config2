@@ -1,0 +1,67 @@
+[ Pump_Left ] ( 5_1 ) 
+Fallback Pump_Night 
+Set Pump_Pulse 
+If Time 08:00 to 11:00 Then Pump_Crest 
+If Time 11:15 to 16:00 Then Pump_Swell 
+If Time 16:15 to 20:00 Then Pump_Nutrie 
+If Time 20:15 to 22:00 Then Pump_Lagoon 
+If Time 22:00 to 06:00 Then Pump_Night 
+If FeedA 000 Then OFF 
+If FeedD 000 Then Pump_Slow 
+
+[ Pump_Right ] ( 5_2 ) 
+Fallback Pump_Night 
+Set Pmp_ASync 
+If Time 08:00 to 09:30 Then Pump_Sync 
+If Time 11:15 to 14:00 Then Pump_Sync 
+If Time 16:15 to 18:00 Then Pump_Sync 
+If Time 20:15 to 21:00 Then Pump_Sync 
+If Time 22:00 to 06:00 Then Pump_Night 
+If FeedA 000 Then OFF 
+If FeedD 000 Then Pump_Slow
+
+[ Pump_Slow ] ( PF20 ) 
+Type: Vortech 
+Vortech Type: Constant 
+Maximum Intensity: 15 
+
+[ Pump_Night ] ( PF21 ) 
+Type: Vortech 
+Vortech Type: Constant 
+Maximum Intensity: 35 
+
+[ Pump_Crest ] ( PF22 ) 
+Type: Vortech 
+Vortech Type: Reef 
+Maximum Intensity: 70 
+
+[ Pump_Swell ] ( PF23 ) 
+Type: Vortech 
+Vortech Type: Tidal 
+Maximum Intensity: 80 
+
+[ Pump_Nutrie ] ( PF24 ) 
+Type: Vortech 
+Vortech Type: Nutrient 
+Maximum Intensity: 80 
+
+[ Pump_Pulse ] ( PF25 ) 
+Type: Vortech 
+Vortech Type: Pulse 
+On Time: .80 
+Maximum Intensity: 60 
+
+[ Pump_Sync ] ( PF26 ) 
+Type: Vortech
+Vortech Type: Sync 
+Maximum Intensity: 100 
+
+[ Pmp_ASync ] ( PF27 ) 
+Type: Vortech 
+Vortech Type: AntiSync 
+Maximum Intensity: 100 
+
+[ Pump_Lagoon ] ( PF28 ) 
+Type: Vortech 
+Vortech Type: Lagoon 
+Maximum Intensity: 80
